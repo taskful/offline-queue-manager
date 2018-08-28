@@ -5,7 +5,9 @@ let _fetch = () => {
   throw('onFetch must to be overridden.');
 };
 let _filter;
-let _getState;
+let _getState = () => {
+  throw('getState must to be overridden.');
+};
 let _isConnected = true;
 let _isSameItem = () => false;
 let _onLoading = () => {};
@@ -98,8 +100,8 @@ const checkQueue = continuing => {
     if (_isConnected && _queue.length > 0 && (_busy === false || continuing)) {
       _busy = true;
       _onLoading(true);
-      _currentQueue = _queue;
-      if (_queue.length > 1) {
+      _currentQueue = JSON.parse(JSON.stringify(_queue));
+      if (_currentQueue.length > 1) {
         _parseQueue();
       } else {
         _runQueue();
