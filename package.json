@@ -1,0 +1,34 @@
+{
+  "name": "api-queue-manager",
+  "version": "0.1.4",
+  "description": "A package for managing a queue of API requests.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bigboldco/queue-manager.git"
+  },
+  "keywords": [
+    "api",
+    "queue",
+    "network",
+    "offline",
+    "fetch",
+    "manager",
+    "redux"
+  ],
+  "author": "Big Bold Company, LLC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bigboldco/queue-manager/issues"
+  },
+  "homepage": "https://github.com/bigboldco/queue-manager#readme",
+  "dependencies": {
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.4.0"
+  }
+}
