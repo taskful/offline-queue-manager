@@ -6,6 +6,7 @@ let _fetch = () => {
 };
 let _filter;
 let _getState;
+let _isConnected = true;
 let _isSameItem = () => false;
 let _onLoading = () => {};
 let _queue;
@@ -14,8 +15,7 @@ let _removeFromQueue = () => {
   throw('onRemoveFromQueue must to be overridden.');
 };
 let _sort;
-let busy = false;
-let isConnected = true;
+let _busy = false;
 
 const _runQueue = (queue = _currentQueue) => {
   queue.forEach(item => _fetch(item));
@@ -29,7 +29,7 @@ const _runQueue = (queue = _currentQueue) => {
   if (_queue.length > 0) {
     checkQueue(true);
   } else {
-    busy = false;
+    _busy = false;
     _onLoading(false);
   }
 }
@@ -95,8 +95,8 @@ const checkQueue = continuing => {
   try {
     const state = _getState();
     _queue = _filter ? _filter(state[_reducer]) : state[_reducer];
-    if (isConnected && _queue.length > 0 && (busy === false || continuing)) {
-      busy = true;
+    if (_isConnected && _queue.length > 0 && (_busy === false || continuing)) {
+      _busy = true;
       _onLoading(true);
       _currentQueue = _queue;
       if (_queue.length > 1) {
@@ -130,6 +130,10 @@ const setGetState = getState => {
   _getState = getState;
 };
 
+const setIsConnected = isConnected => {
+  _isConnected = isConnected;
+};
+
 const setIsSameItem = isSameItem => {
   _isSameItem = isSameItem;
 };
@@ -156,6 +160,7 @@ module.exports = {
   setFetch,
   setFilter,
   setGetState,
+  setIsConnected,
   setIsSameItem,
   setOnLoading,
   setReducer,

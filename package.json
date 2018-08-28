@@ -1,6 +1,6 @@
 {
   "name": "api-queue-manager",
-  "version": "0.1.5",
+  "version": "0.1.7",
   "description": "A package for managing a queue of API requests.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bigboldco/queue-manager.git"
+    "url": "git+https://github.com/bigboldco/api-queue-manager.git"
   },
   "keywords": [
     "api",
@@ -22,9 +22,9 @@
   "author": "Big Bold Company, LLC",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bigboldco/queue-manager/issues"
+    "url": "https://github.com/bigboldco/api-queue-manager/issues"
   },
-  "homepage": "https://github.com/bigboldco/queue-manager#readme",
+  "homepage": "https://github.com/bigboldco/api-queue-manager#readme",
   "dependencies": {
     "uuid": "^3.3.2"
   },
