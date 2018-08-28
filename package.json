@@ -1,6 +1,6 @@
 {
   "name": "api-queue-manager",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A package for managing a queue of API requests.",
   "main": "index.js",
   "scripts": {
