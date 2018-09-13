@@ -1,6 +1,6 @@
 {
   "name": "api-queue-manager",
-  "version": "0.1.9",
+  "version": "0.1.11",
   "description": "A package for managing a queue of API requests.",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,7 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "eslint": "^5.4.0"
+    "eslint": "^5.4.0",
+    "eslint-config-bigboldco": "^0.1.1"
   }
 }

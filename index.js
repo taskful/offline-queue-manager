@@ -1,12 +1,14 @@
-import uuidv1 from 'uuid/v1';
+import uuidv4 from 'uuid/v4';
 
 let _currentQueue;
 let _fetch = () => {
-  throw('onFetch must to be overridden.');
+  const error = 'onFetch must to be overridden.';
+  throw error;
 };
 let _filter;
 let _getState = () => {
-  throw('getState must to be overridden.');
+  const error = 'getState must to be overridden.';
+  throw error;
 };
 let _isConnected = true;
 let _isSameItem = () => false;
@@ -14,7 +16,8 @@ let _onLoading = () => {};
 let _queue;
 let _reducer = 'queue';
 let _removeFromQueue = () => {
-  throw('onRemoveFromQueue must to be overridden.');
+  const error = 'onRemoveFromQueue must to be overridden.';
+  throw error;
 };
 let _sort;
 let _busy = false;
@@ -29,19 +32,19 @@ const _runQueue = (queue = _currentQueue) => {
   const state = _getState();
   _queue = _filter ? _filter(state[_reducer]) : state[_reducer];
   if (_queue.length > 0) {
-    checkQueue(true);
+    checkQueue(true); // eslint-disable-line
   } else {
     _busy = false;
     _onLoading(false);
   }
-}
+};
 
 const _parseQueue = async () => {
   let parsedQueue = [];
   const creates = _currentQueue.filter(item => (item.type === 'CREATE'));
   let edits = _currentQueue.filter(item => (item.type === 'EDIT'));
   let deletes = _currentQueue.filter(item => (item.type === 'DELETE'));
-  let otherTypeItems = _currentQueue.filter(item => (item.type !== 'CREATE' && item.type !== 'EDIT' && item.type !== 'DELETE'))
+  const otherTypeItems = _currentQueue.filter(item => (item.type !== 'CREATE' && item.type !== 'EDIT' && item.type !== 'DELETE'));
   let relatedCreates = [];
   let relatedEdits = [];
   let relatedDeletes = [];
@@ -52,7 +55,7 @@ const _parseQueue = async () => {
     relatedEdits = edits.filter(editedItem => _isSameItem(item, editedItem));
     relatedDeletes = deletes.filter(deletedItem => _isSameItem(item, deletedItem));
     if (relatedEdits.length === 0 && relatedDeletes.length === 0) {
-      createNotInQueue = parsedQueue.filter(parsedItem => _isSameItem(item, parsedItem)).length === 0;
+      const createNotInQueue = parsedQueue.filter(parsedItem => _isSameItem(item, parsedItem)).length === 0;
       if (createNotInQueue) {
         parsedQueue.push(item);
       }
@@ -69,7 +72,7 @@ const _parseQueue = async () => {
     let lastEdit = relatedEdits[0]; // Grab the most recent edit
     relatedDeletes = deletes.filter(deletedItem => _isSameItem(item, deletedItem));
     if (relatedDeletes.length === 0) {
-      editNotInQueue = parsedQueue.filter(parsedItem => _isSameItem(item, parsedItem)).length === 0;
+      const editNotInQueue = parsedQueue.filter(parsedItem => _isSameItem(item, parsedItem)).length === 0;
       if (editNotInQueue) {
         if (relatedCreates.length > 0) {
           lastEdit = {
@@ -93,13 +96,13 @@ const _parseQueue = async () => {
   _runQueue(parsedQueue);
 };
 
-const checkQueue = continuing => {
+const checkQueue = (continuing) => {
   try {
     const state = _getState();
     _queue = _filter ? _filter(state[_reducer]) : state[_reducer];
     if (_isConnected && _queue.length > 0 && (_busy === false || continuing)) {
       _busy = true;
-      _onLoading(true);
+      _onLoading(true, _queue.length);
       _currentQueue = JSON.parse(JSON.stringify(_queue));
       if (_currentQueue.length > 1) {
         _parseQueue();
@@ -108,7 +111,7 @@ const checkQueue = continuing => {
       }
     }
   } catch (error) {
-    throw(error);
+    throw (error);
   }
 };
 
@@ -116,43 +119,43 @@ const createItem = ({ type, data, object }) => ({
   type,
   data,
   object,
-  uuid: uuidv1(),
+  uuid: uuidv4(),
   timestamp: Date.now(),
 });
 
-const setFetch = fetch => {
+const setFetch = (fetch) => {
   _fetch = fetch;
 };
 
-const setFilter = filter => {
+const setFilter = (filter) => {
   _filter = filter;
 };
 
-const setGetState = getState => {
+const setGetState = (getState) => {
   _getState = getState;
 };
 
-const setIsConnected = isConnected => {
+const setIsConnected = (isConnected) => {
   _isConnected = isConnected;
 };
 
-const setIsSameItem = isSameItem => {
+const setIsSameItem = (isSameItem) => {
   _isSameItem = isSameItem;
 };
 
-const setOnLoading = onLoading => {
+const setOnLoading = (onLoading) => {
   _onLoading = onLoading;
 };
 
-const setReducer = reducer => {
+const setReducer = (reducer) => {
   _reducer = reducer;
 };
 
-const setRemoveFromQueue = removeFromQueue => {
+const setRemoveFromQueue = (removeFromQueue) => {
   _removeFromQueue = removeFromQueue;
 };
 
-const setSort = sort => {
+const setSort = (sort) => {
   _sort = sort;
 };
 
