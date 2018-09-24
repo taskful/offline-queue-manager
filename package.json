@@ -1,14 +1,15 @@
 {
   "name": "api-queue-manager",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "A package for managing a queue of API requests.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "lint-staged": "lint-staged"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bigboldco/api-queue-manager.git"
+    "url": "git+https://github.com/taskful/api-queue-manager.git"
   },
   "keywords": [
     "api",
@@ -19,17 +20,23 @@
     "manager",
     "redux"
   ],
-  "author": "Big Bold Company, LLC",
+  "author": "Taskful, Inc.",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/bigboldco/api-queue-manager/issues"
+    "url": "https://github.com/taskful/api-queue-manager/issues"
   },
-  "homepage": "https://github.com/bigboldco/api-queue-manager#readme",
+  "homepage": "https://github.com/taskful/api-queue-manager#readme",
   "dependencies": {
     "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "eslint": "^5.4.0",
-    "eslint-config-bigboldco": "^0.1.1"
-  }
+    "eslint": "^5.6.0",
+    "eslint-config-taskful": "^0.1.0",
+    "lint-staged": "^7.3.0",
+    "pre-commit": "^1.2.2"
+  },
+  "lint-staged": {
+    "*.js": "eslint"
+  },
+  "pre-commit": "lint-staged",
 }
