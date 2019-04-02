@@ -6,15 +6,14 @@ let _fetch = () => {
   throw error;
 };
 let _filter;
-let _getState = () => {
-  const error = 'getState must to be overridden.';
+let _getQueue = () => {
+  const error = 'getQueue must to be overridden.';
   throw error;
 };
 let _isConnected = true;
 let _isSameItem = () => false;
 let _onLoading = () => {};
 let _queue;
-let _reducer = 'queue';
 let _removeFromQueue = () => {
   const error = 'onRemoveFromQueue must to be overridden.';
   throw error;
@@ -29,8 +28,7 @@ const _runQueue = (queue = _currentQueue) => {
   oldQueue.forEach(item => oldItems.push(item.uuid));
   _removeFromQueue(oldItems);
 
-  const state = _getState();
-  _queue = _filter ? _filter(state[_reducer]) : state[_reducer];
+  _queue = _filter ? _filter(_getQueue()) : _getQueue();
   if (_queue.length > 0) {
     checkQueue(true); // eslint-disable-line
   } else {
@@ -98,8 +96,7 @@ const _parseQueue = async () => {
 
 const checkQueue = (continuing) => {
   try {
-    const state = _getState();
-    _queue = _filter ? _filter(state[_reducer]) : state[_reducer];
+    _queue = _filter ? _filter(_getQueue()) : _getQueue();
     if (_isConnected && _queue.length > 0 && (_busy === false || continuing)) {
       _busy = true;
       _onLoading(true, _queue.length);
@@ -131,8 +128,8 @@ const setFilter = (filter) => {
   _filter = filter;
 };
 
-const setGetState = (getState) => {
-  _getState = getState;
+const setGetQueue = (getQueue) => {
+  _getQueue = getQueue;
 };
 
 const setIsConnected = (isConnected) => {
@@ -145,10 +142,6 @@ const setIsSameItem = (isSameItem) => {
 
 const setOnLoading = (onLoading) => {
   _onLoading = onLoading;
-};
-
-const setReducer = (reducer) => {
-  _reducer = reducer;
 };
 
 const setRemoveFromQueue = (removeFromQueue) => {
@@ -164,11 +157,10 @@ module.exports = {
   createItem,
   setFetch,
   setFilter,
-  setGetState,
+  setGetQueue,
   setIsConnected,
   setIsSameItem,
   setOnLoading,
-  setReducer,
   setRemoveFromQueue,
   setSort,
 };

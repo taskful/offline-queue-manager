@@ -1,4 +1,4 @@
-# API Queue Manager &middot;  [![npm version](https://badge.fury.io/js/api-queue-manager.svg)](https://badge.fury.io/js/api-queue-manager)
+# Offline Queue Manager &middot;  [![npm version](https://badge.fury.io/js/offline-queue-manager.svg)](https://badge.fury.io/js/offline-queue-manager)
 
 A package for managing a queue of API requests.
 
