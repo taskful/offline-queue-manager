@@ -39,10 +39,10 @@ const _runQueue = (queue = _currentQueue) => {
 
 const _parseQueue = async () => {
   let parsedQueue = [];
-  const creates = _currentQueue.filter(item => (item.type === 'CREATE'));
-  let edits = _currentQueue.filter(item => (item.type === 'EDIT'));
-  let deletes = _currentQueue.filter(item => (item.type === 'DELETE'));
-  const otherTypeItems = _currentQueue.filter(item => (item.type !== 'CREATE' && item.type !== 'EDIT' && item.type !== 'DELETE'));
+  const creates = _currentQueue.filter(item => (item.method === 'CREATE'));
+  let edits = _currentQueue.filter(item => (item.method === 'EDIT'));
+  let deletes = _currentQueue.filter(item => (item.method === 'DELETE'));
+  const otherTypeItems = _currentQueue.filter(item => (item.method !== 'CREATE' && item.method !== 'EDIT' && item.method !== 'DELETE'));
   let relatedCreates = [];
   let relatedEdits = [];
   let relatedDeletes = [];
@@ -75,7 +75,7 @@ const _parseQueue = async () => {
         if (relatedCreates.length > 0) {
           lastEdit = {
             ...lastEdit,
-            type: 'CREATE',
+            method: 'CREATE',
           };
         }
         parsedQueue.push(lastEdit);
@@ -112,10 +112,10 @@ const checkQueue = (continuing) => {
   }
 };
 
-const createItem = ({ type, data, object }) => ({
+const createItem = ({ method, payload, type }) => ({
+  method,
+  payload,
   type,
-  data,
-  object,
   uuid: uuidv4(),
   timestamp: Date.now(),
 });
