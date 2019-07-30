@@ -99,8 +99,8 @@ const checkQueue = (continuing) => {
     _queue = _filter ? _filter(_getQueue()) : _getQueue();
     if (_isConnected && _queue.length > 0 && (_busy === false || continuing)) {
       _busy = true;
-      _onLoading(true, _queue.length);
       _currentQueue = JSON.parse(JSON.stringify(_queue));
+      if (_currentQueue.length === 0) _onLoading(false);
       if (_currentQueue.length > 1) {
         _parseQueue();
       } else {
