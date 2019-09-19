@@ -33,7 +33,7 @@ const _runQueue = (queue = _currentQueue) => {
     checkQueue(true); // eslint-disable-line
   } else {
     _busy = false;
-    _onLoading(false);
+    _onLoading(false, 0);
   }
 };
 
@@ -100,7 +100,7 @@ const checkQueue = (continuing) => {
     if (_isConnected && _queue.length > 0 && (_busy === false || continuing)) {
       _busy = true;
       _currentQueue = JSON.parse(JSON.stringify(_queue));
-      if (_currentQueue.length === 0) _onLoading(false);
+      _onLoading(_currentQueue.length > 0, _currentQueue.length);
       if (_currentQueue.length > 1) {
         _parseQueue();
       } else {
@@ -112,12 +112,13 @@ const checkQueue = (continuing) => {
   }
 };
 
-const createItem = ({ method, payload, type }) => ({
+const createItem = ({ method, payload, type, meta = null }) => ({
   method,
   payload,
   type,
   uuid: uuidv4(),
   timestamp: Date.now(),
+  meta,
 });
 
 const setFetch = (fetch) => {
