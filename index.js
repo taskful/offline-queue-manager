@@ -21,20 +21,21 @@ let _removeFromQueue = () => {
 let _sort;
 let _busy = false;
 
-const _runQueue = (queue = _currentQueue) => {
-  queue.forEach(item => _fetch(item));
-  const oldItems = [];
-  const oldQueue = _currentQueue;
-  oldQueue.forEach(item => oldItems.push(item.uuid));
-  _removeFromQueue(oldItems);
+const _runQueue = async (queue = _currentQueue) => {
+  _fetch(queue, () => {
+    const oldItems = [];
+    const oldQueue = _currentQueue;
+    oldQueue.forEach(item => oldItems.push(item.uuid));
+    _removeFromQueue(oldItems);
 
-  _queue = _filter ? _filter(_getQueue()) : _getQueue();
-  if (_queue.length > 0) {
-    checkQueue(true); // eslint-disable-line
-  } else {
-    _busy = false;
-    _onLoading(false, 0);
-  }
+    _queue = _filter ? _filter(_getQueue()) : _getQueue();
+    if (_queue.length > 0) {
+      checkQueue(false, true); // eslint-disable-line
+    } else {
+      _busy = false;
+      _onLoading(false, 0);
+    }
+  });
 };
 
 const _parseQueue = async () => {
@@ -94,13 +95,15 @@ const _parseQueue = async () => {
   _runQueue(parsedQueue);
 };
 
-const checkQueue = (continuing) => {
+const checkQueue = (force = false, continuing = false) => setTimeout(() => {
   try {
-    _queue = _filter ? _filter(_getQueue()) : _getQueue();
+    _queue = _filter ? _filter(_getQueue(), force) : _getQueue();
     if (_isConnected && _queue.length > 0 && (_busy === false || continuing)) {
       _busy = true;
       _currentQueue = JSON.parse(JSON.stringify(_queue));
-      _onLoading(_currentQueue.length > 0, _currentQueue.length);
+      if (!continuing) {
+        _onLoading(true, _currentQueue.length);
+      }
       if (_currentQueue.length > 1) {
         _parseQueue();
       } else {
@@ -110,7 +113,7 @@ const checkQueue = (continuing) => {
   } catch (error) {
     throw (error);
   }
-};
+}, 0);
 
 const createItem = ({ method, payload, type, meta = null }) => ({
   method,
