@@ -33,7 +33,7 @@ const _runQueue = async (queue = _currentQueue) => {
       checkQueue(false, true); // eslint-disable-line
     } else {
       _busy = false;
-      _onLoading(false, 0);
+      _onLoading(false, []);
     }
   });
 };
@@ -100,9 +100,9 @@ const checkQueue = (force = false, continuing = false) => setTimeout(() => {
     _queue = _filter ? _filter(_getQueue(), force) : _getQueue();
     if (_isConnected && _queue.length > 0 && (_busy === false || continuing)) {
       _busy = true;
-      _currentQueue = JSON.parse(JSON.stringify(_queue));
+      _currentQueue = [..._queue];
       if (!continuing) {
-        _onLoading(true, _currentQueue.length);
+        _onLoading(true, _currentQueue);
       }
       if (_currentQueue.length > 1) {
         _parseQueue();
