@@ -1,4 +1,4 @@
-import uuidv4 from 'uuid/v4';
+const uuidv4 = require('uuid/v4');
 
 let _currentQueue;
 let _fetch = () => {
@@ -95,7 +95,7 @@ const _parseQueue = async () => {
   _runQueue(parsedQueue);
 };
 
-export const checkQueue = (force = false, continuing = false) => setTimeout(() => {
+const checkQueue = (force = false, continuing = false) => setTimeout(() => {
   try {
     _queue = _filter ? _filter(_getQueue(), force) : _getQueue();
     if (_isConnected && _queue.length > 0 && (_busy === false || continuing)) {
@@ -115,7 +115,7 @@ export const checkQueue = (force = false, continuing = false) => setTimeout(() =
   }
 }, 0);
 
-export const createItem = ({ method, payload, type, meta = null }) => ({
+const createItem = ({ method, payload, type, meta = null }) => ({
   method,
   payload,
   type,
@@ -124,39 +124,39 @@ export const createItem = ({ method, payload, type, meta = null }) => ({
   meta,
 });
 
-export const setFetch = (fetch) => {
+const setFetch = (fetch) => {
   _fetch = fetch;
 };
 
-export const setFilter = (filter) => {
+const setFilter = (filter) => {
   _filter = filter;
 };
 
-export const setGetQueue = (getQueue) => {
+const setGetQueue = (getQueue) => {
   _getQueue = getQueue;
 };
 
-export const setIsConnected = (isConnected) => {
+const setIsConnected = (isConnected) => {
   _isConnected = isConnected;
 };
 
-export const setIsSameItem = (isSameItem) => {
+const setIsSameItem = (isSameItem) => {
   _isSameItem = isSameItem;
 };
 
-export const setOnLoading = (onLoading) => {
+const setOnLoading = (onLoading) => {
   _onLoading = onLoading;
 };
 
-export const setRemoveFromQueue = (removeFromQueue) => {
+const setRemoveFromQueue = (removeFromQueue) => {
   _removeFromQueue = removeFromQueue;
 };
 
-export const setSort = (sort) => {
+const setSort = (sort) => {
   _sort = sort;
 };
 
-export const initOfflineQueue = (options) => {
+const initOfflineQueue = (options) => {
   const {
     fetch,
     filter,
@@ -208,4 +208,4 @@ const OfflineQueueManager = {
   setSort,
 };
 
-export default OfflineQueueManager;
+module.exports = OfflineQueueManager;
