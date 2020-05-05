@@ -156,9 +156,48 @@ const setSort = (sort) => {
   _sort = sort;
 };
 
+const initOfflineQueue = (options) => {
+  const {
+    fetch,
+    filter,
+    getQueue,
+    isConnected,
+    isSameItem,
+    onLoading,
+    removeFromQueue,
+    sort,
+  } = options;
+
+  if (fetch) {
+    _fetch = fetch;
+  }
+  if (filter) {
+    _filter = filter;
+  }
+  if (getQueue) {
+    _getQueue = getQueue;
+  }
+  if (isConnected) {
+    _isConnected = isConnected;
+  }
+  if (isSameItem) {
+    _isSameItem = isSameItem;
+  }
+  if (onLoading) {
+    _onLoading = onLoading;
+  }
+  if (removeFromQueue) {
+    _removeFromQueue = removeFromQueue;
+  }
+  if (sort) {
+    _sort = sort;
+  }
+};
+
 module.exports = {
   checkQueue,
   createItem,
+  initOfflineQueue,
   setFetch,
   setFilter,
   setGetQueue,
