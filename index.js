@@ -95,7 +95,7 @@ const _parseQueue = async () => {
   _runQueue(parsedQueue);
 };
 
-const checkQueue = (force = false, continuing = false) => setTimeout(() => {
+export const checkQueue = (force = false, continuing = false) => setTimeout(() => {
   try {
     _queue = _filter ? _filter(_getQueue(), force) : _getQueue();
     if (_isConnected && _queue.length > 0 && (_busy === false || continuing)) {
@@ -115,7 +115,7 @@ const checkQueue = (force = false, continuing = false) => setTimeout(() => {
   }
 }, 0);
 
-const createItem = ({ method, payload, type, meta = null }) => ({
+export const createItem = ({ method, payload, type, meta = null }) => ({
   method,
   payload,
   type,
@@ -124,39 +124,39 @@ const createItem = ({ method, payload, type, meta = null }) => ({
   meta,
 });
 
-const setFetch = (fetch) => {
+export const setFetch = (fetch) => {
   _fetch = fetch;
 };
 
-const setFilter = (filter) => {
+export const setFilter = (filter) => {
   _filter = filter;
 };
 
-const setGetQueue = (getQueue) => {
+export const setGetQueue = (getQueue) => {
   _getQueue = getQueue;
 };
 
-const setIsConnected = (isConnected) => {
+export const setIsConnected = (isConnected) => {
   _isConnected = isConnected;
 };
 
-const setIsSameItem = (isSameItem) => {
+export const setIsSameItem = (isSameItem) => {
   _isSameItem = isSameItem;
 };
 
-const setOnLoading = (onLoading) => {
+export const setOnLoading = (onLoading) => {
   _onLoading = onLoading;
 };
 
-const setRemoveFromQueue = (removeFromQueue) => {
+export const setRemoveFromQueue = (removeFromQueue) => {
   _removeFromQueue = removeFromQueue;
 };
 
-const setSort = (sort) => {
+export const setSort = (sort) => {
   _sort = sort;
 };
 
-const initOfflineQueue = (options) => {
+export const initOfflineQueue = (options) => {
   const {
     fetch,
     filter,
@@ -194,7 +194,7 @@ const initOfflineQueue = (options) => {
   }
 };
 
-module.exports = {
+const OfflineQueueManager = {
   checkQueue,
   createItem,
   initOfflineQueue,
@@ -207,3 +207,5 @@ module.exports = {
   setRemoveFromQueue,
   setSort,
 };
+
+export default OfflineQueueManager;
